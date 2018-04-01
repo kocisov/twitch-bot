@@ -48,17 +48,15 @@ function resolveColor(chan, name, color) {
   return color
 }
 
-@inject('PluginsStore', 'ChatStore')
+@inject('PluginsStore', 'ChatStore', 'AvatarsStore')
 @observer
 export default class Chat extends React.Component {
   componentDidUpdate() {
     const node = document.getElementById('messages-box')
-
-    let scrollHeight = node.scrollHeight
-    let clientHeight = node.clientHeight
-    let scrollTop = node.scrollTop
-
-    if (clientHeight + scrollTop + 70 >= scrollHeight) {
+    const scrollHeight = node.scrollHeight
+    const clientHeight = node.clientHeight
+    const scrollTop = node.scrollTop
+    if (clientHeight + scrollTop + 80 >= scrollHeight) {
       node.scrollTop = scrollHeight
     }
   }
@@ -82,8 +80,11 @@ export default class Chat extends React.Component {
   }
 
   async pushNewMessage(data) {
-    const { pushMessage, getAvatar } = this.props.ChatStore
-    const avatar = await getAvatar(data.user)
+    const { pushMessage } = this.props.ChatStore
+    const { getAvatar } = this.props.AvatarsStore
+    const avatar = this.props.PluginsStore.avatars
+      ? await getAvatar(data.user)
+      : null
     pushMessage({
       ...data,
       avatar,
@@ -127,15 +128,16 @@ export default class Chat extends React.Component {
     const { chat: enabled } = this.props.PluginsStore
 
     return enabled ? (
-      <div>
+      <div style={{ height: '100%' }}>
         <Flex align="center">
-          <Text fontSize={18} fontWeight={600} style={{ marginRight: 5 }}>
+          <Text fontSize={20} fontWeight={600} style={{ marginRight: 5 }}>
             Chat
           </Text>
           <Button
             onClick={() => {
               this.pushNewMessage({
                 id: Math.random(),
+                color: '#cc343d',
                 user: 'KociQQ',
                 content: 'Cool Kappa',
               })
@@ -148,13 +150,15 @@ export default class Chat extends React.Component {
           <Child id="messages-box">
             {messages.map((message) => (
               <Flex align="center" key={message.id}>
-                <Avatar
-                  width={30}
-                  height={30}
-                  margin={2}
-                  src={message.avatar}
-                  alt=""
-                />
+                {this.props.PluginsStore.avatars && (
+                  <Avatar
+                    width={30}
+                    height={30}
+                    margin={2}
+                    src={message.avatar}
+                    alt=""
+                  />
+                )}
                 <Text margin={2} color={message.color} fontWeight={600}>
                   {message.user}
                 </Text>

@@ -5,7 +5,8 @@ export default styled.div`
   ${(props) => handleProps(props)};
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 115px);
+  flex: 1;
+  height: 100%;
   overflow: hidden;
   position: relative;
   width: 100%;

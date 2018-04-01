@@ -1,14 +1,8 @@
 import { action, observable } from 'mobx'
 
 export default new class ChatStore {
-  @observable messages = []
-  @observable avatars = {}
   @observable mounted = false
-
-  @action
-  pushMessage = (message) => {
-    this.messages.push(message)
-  }
+  @observable messages = []
 
   @action
   afterMount() {
@@ -16,33 +10,13 @@ export default new class ChatStore {
   }
 
   @action
-  deleteMessage(id) {
-    this.messages = this.messages.filter((item) => item.id !== id)
+  pushMessage = (message) => {
+    this.messages.push(message)
   }
 
   @action
-  addAvatar = (name, url) => {
-    this.avatars[name] = url
-  }
-
-  getAvatar = async (name) => {
-    if (!this.avatars[name]) {
-      const { addAvatar } = this
-      const baseUrl = 'https://api.twitch.tv/kraken/channels'
-      const url = `${baseUrl}/${name}`
-
-      await fetch(url, {
-        headers: {
-          'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          addAvatar(name, res.logo)
-        })
-    }
-
-    return this.avatars[name]
+  deleteMessage(id) {
+    this.messages = this.messages.filter((item) => item.id !== id)
   }
 
   @action

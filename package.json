@@ -1,6 +1,6 @@
 {
   "name": "twitch-bot",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {
     "lodash": "^4.17.5",
     "mobx": "^4.1.1",
@@ -10,11 +10,16 @@
     "react-icons": "^2.2.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
+    "recharts": "^1.0.0-beta.10",
     "styled-components": "^3.2.5",
     "tmi.js": "^1.2.1"
   },
+  "homepage": "./",
+  "main": "src/electron.js",
   "devDependencies": {
     "babel-plugin-styled-components": "^1.5.1",
+    "electron": "^1.8.4",
+    "electron-devtools-installer": "^2.2.3",
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.0"
   },
@@ -23,6 +28,8 @@
     "build": "react-app-rewired build",
     "eject": "react-app-rewired eject",
     "start": "react-app-rewired start",
-    "test": "react-app-rewired test --env=jsdom"
+    "test": "react-app-rewired test --env=jsdom",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron": "."
   }
 }

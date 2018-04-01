@@ -12,6 +12,7 @@ export default function({
   position,
   width,
   direction,
+  justify,
 }) {
   return `
     ${background && `background: ${background}`};
@@ -27,5 +28,6 @@ export default function({
     ${position && `position: ${position}`};
     ${width && `width: ${width}px`};
     ${direction && `flex-direction: ${direction}`};
+    ${justify && `justify-content: ${justify}`};
   `
 }
