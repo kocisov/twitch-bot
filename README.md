@@ -5,7 +5,7 @@
 ## How does it currently look?
 
 <p align="center">
-  <img src="http://kocibot-static.surge.sh/showcase.gif" alt="" />
+  <img alt="" src="https://kocibot-static.surge.sh/showcase.gif">
 </p>
 
 ## What
