@@ -6,11 +6,16 @@ const {
 } = require('electron-devtools-installer')
 const path = require('path')
 const url = require('url')
-
+const isDev = process.env.NODE_ENV === 'development'
 let mainWindow
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 800, height: 600 })
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 420,
+    maxWidth: 860,
+  })
+
   mainWindow.loadURL(
     process.env.ELECTRON_START_URL ||
       url.format({
@@ -20,15 +25,19 @@ function createWindow() {
       })
   )
 
-  installExtension(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err))
+  if (isDev) {
+    const devtools = [REACT_DEVELOPER_TOOLS, MOBX_DEVTOOLS]
 
-  installExtension(MOBX_DEVTOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err))
+    devtools.forEach((devTool) => {
+      installExtension(devTool)
+        .then((name) => console.log(`Added Extension:  ${name}`))
+        .catch((err) => console.log('An error occurred: ', err))
+    })
 
-  mainWindow.webContents.openDevTools()
+    // chromeDevTools
+    mainWindow.webContents.openDevTools()
+  }
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })

@@ -1,11 +1,6 @@
 import * as React from 'react'
 import { inject, observer } from 'mobx-react'
 import { PieChart, Pie, Cell } from 'recharts'
-// import { client } from '../client'
-import Avatar from '../components/Avatar'
-import Text from '../components/Text'
-import Button from '../components/Button'
-import Flex from '../components/Flex'
 
 const data = [
   {

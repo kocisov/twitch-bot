@@ -29,7 +29,7 @@
     "eject": "react-app-rewired eject",
     "start": "react-app-rewired start",
     "test": "react-app-rewired test --env=jsdom",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron-dev": "NODE_ENV=development ELECTRON_START_URL=http://localhost:3000 electron .",
     "electron": "."
   }
 }
