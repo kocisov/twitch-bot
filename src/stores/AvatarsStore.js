@@ -1,17 +1,24 @@
 import { action, observable } from 'mobx'
+import { fsCache } from '../electron-caches'
 
 export default new class AvatarsStore {
   @observable cache = {}
 
   @action
-  setCacheFromStorage(cache) {
-    this.cache = cache
+  setFromCache(cache) {
+    this.cache = JSON.parse(cache)
   }
 
   @action
   addAvatar = (name, url) => {
     this.cache[name] = url
     this.cache[name.toLocaleLowerCase()] = url
+
+    this.makeFSCache()
+  }
+
+  makeFSCache = () => {
+    fsCache.avatars(this.cache)
   }
 
   getAvatarStatic = (name) => {

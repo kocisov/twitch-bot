@@ -36,6 +36,12 @@ Check this gif https://kocibot-static.surge.sh/showcase.gif
       * Local file caching to be added
 7.  Usable for everyone, not just kocibot
 
+## Needs to be done
+
+1.  Subscribers and BTTV + FrankerZ emotes
+2.  Simplify electron-caches.js and make it "not LULable"
+3.  Scripts for git, npm...
+
 ## How to get it working
 
 Required .env variables, I am using .env.local, wondering why 🤔

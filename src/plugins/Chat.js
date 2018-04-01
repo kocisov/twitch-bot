@@ -56,7 +56,7 @@ export default class Chat extends React.Component {
     const scrollHeight = node.scrollHeight
     const clientHeight = node.clientHeight
     const scrollTop = node.scrollTop
-    if (clientHeight + scrollTop + 80 >= scrollHeight) {
+    if (clientHeight + scrollTop + 120 >= scrollHeight) {
       node.scrollTop = scrollHeight
     }
   }
@@ -72,6 +72,34 @@ export default class Chat extends React.Component {
           user: userState['display-name'],
           content: message,
           color,
+        })
+      })
+
+      client.on('join', (channel, username, self) => {
+        if (self) {
+          return false
+        }
+
+        this.pushNewMessage({
+          channel,
+          id: `${username}-join`,
+          user: username,
+          content: 'just joined',
+          color: '#2eec71',
+        })
+      })
+
+      client.on('part', (channel, username, self) => {
+        if (self) {
+          return false
+        }
+
+        this.pushNewMessage({
+          channel,
+          id: `${username}-leave`,
+          user: username,
+          content: 'just left', // in memory of Nuf
+          color: '#cc343d',
         })
       })
 
@@ -128,7 +156,7 @@ export default class Chat extends React.Component {
     const { chat: enabled } = this.props.PluginsStore
 
     return enabled ? (
-      <div style={{ height: '100%' }}>
+      <div style={{ flex: 2, height: '100%', marginRight: 10 }}>
         <Flex align="center">
           <Text fontSize={20} fontWeight={600} style={{ marginRight: 5 }}>
             Chat
@@ -149,7 +177,12 @@ export default class Chat extends React.Component {
         <Messages>
           <Child id="messages-box">
             {messages.map((message) => (
-              <Flex align="center" key={message.id}>
+              <Flex
+                align="center"
+                key={
+                  message.id || `#{message.user}${message.content.split(0, 2)}`
+                }
+              >
                 {this.props.PluginsStore.avatars && (
                   <Avatar
                     width={30}

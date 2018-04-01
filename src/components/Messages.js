@@ -6,10 +6,9 @@ export default styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
+  height: calc(100vh - 180px);
   overflow: hidden;
   position: relative;
-  width: 100%;
 `
 
 export const Child = styled.div`

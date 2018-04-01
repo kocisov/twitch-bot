@@ -53,14 +53,16 @@ export default class Users extends React.Component {
     const { count, viewers, mods } = this.props.UsersStore
 
     return this.props.PluginsStore.users ? (
-      <div>
+      <Flex flex={1} direction="column">
         <Flex align="center">
           <Text fontSize={20} fontWeight={600}>
             Users
           </Text>
-          <div style={{ marginLeft: 'auto' }}>{count}</div>
+          <Text fontSize={14} fontWeight={400} style={{ marginLeft: 'auto' }}>
+            {count}
+          </Text>
         </Flex>
-        <Flex>
+        <Flex align="flex-start">
           <Flex flex={1} direction="column">
             <Text fontSize={16} fontWeight={500}>
               Viewers
@@ -102,7 +104,7 @@ export default class Users extends React.Component {
               ))}
           </Flex>
         </Flex>
-      </div>
+      </Flex>
     ) : null
   }
 }

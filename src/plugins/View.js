@@ -4,6 +4,7 @@ import Images from 'react-icons/lib/io/image'
 import ChatBoxes from 'react-icons/lib/io/chatboxes'
 import Chart from 'react-icons/lib/io/pie-graph'
 import Users from 'react-icons/lib/io/person'
+import Say from 'react-icons/lib/io/chatbubble'
 import Flex from '../components/Flex'
 import Page from '../components/Page'
 import Text from '../components/Text'
@@ -43,6 +44,17 @@ const plugins = [
     description: (
       <Text fontSize={14} color="#c1c1c1">
         Charts will show data in pretty way
+      </Text>
+    ),
+  },
+  {
+    name: 'Say',
+    variable: 'say',
+    disabled: false,
+    icon: <Say style={{ minWidth: 60 }} width={30} height={30} />,
+    description: (
+      <Text fontSize={14} color="#c1c1c1">
+        Say will let you send a message to your channel
       </Text>
     ),
   },
