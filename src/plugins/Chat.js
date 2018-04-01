@@ -110,9 +110,8 @@ export default class Chat extends React.Component {
   async pushNewMessage(data) {
     const { pushMessage } = this.props.ChatStore
     const { getAvatar } = this.props.AvatarsStore
-    const avatar = this.props.PluginsStore.avatars
-      ? await getAvatar(data.user)
-      : null
+    const avatar = await getAvatar(data.user)
+
     pushMessage({
       ...data,
       avatar,

@@ -48,7 +48,7 @@ Required .env variables, I am using .env.local, wondering why 🤔
 
 * `REACT_APP_TWITCH_NAME` name of bot
 * `REACT_APP_TWITCH_PASS` bot's oauth pass => https://twitchapps.com/tmi/
-* `REACT_APP_TWITCH_PASS` twitch app client id => https://dev.twitch.tv/dashboard/apps
+* `REACT_APP_TWITCH_CLIENT_ID` twitch app client id => https://dev.twitch.tv/dashboard/apps
 
 ## Installation
 

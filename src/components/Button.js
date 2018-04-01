@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import handleProps from '../static/style/props'
 
-export default styled.div`
+export default styled.button`
   ${(props) => handleProps(props)};
   align-items: center;
   background: #e7e7e7;

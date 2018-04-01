@@ -5,6 +5,7 @@ import Users from '../plugins/Users'
 import Charts from '../plugins/Charts'
 import Chat from '../plugins/Chat'
 import Say from '../plugins/Say'
+import Stream from '../plugins/Stream'
 import Flex from './Flex'
 
 export default class Canvas extends React.Component {
@@ -18,6 +19,7 @@ export default class Canvas extends React.Component {
           <Users />
         </Flex>
         <Say />
+        <Stream />
       </Page>
     )
   }
