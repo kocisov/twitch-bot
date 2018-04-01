@@ -4,9 +4,7 @@
 
 ## How does it currently look?
 
-<p align="center">
-  <img alt="" src="https://kocibot-static.surge.sh/showcase.gif">
-</p>
+Check this gif https://kocibot-static.surge.sh/showcase.gif
 
 ## What
 
