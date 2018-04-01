@@ -165,7 +165,7 @@ export default class Chat extends React.Component {
               this.pushNewMessage({
                 id: Math.random(),
                 color: '#cc343d',
-                user: 'KociQQ',
+                user: process.env.REACT_APP_TWITCH_USER_NAME,
                 content: 'Cool Kappa',
               })
             }}

@@ -23,7 +23,9 @@ export default class Users extends React.Component {
 
         client.api(
           {
-            url: 'https://tmi.twitch.tv/group/user/kociqq/chatters',
+            url: `https://tmi.twitch.tv/group/user/${
+              process.env.REACT_APP_TWITCH_USER_NAME
+            }/chatters`,
           },
           (err, r, response) => {
             changeCount(response.data.chatter_count)

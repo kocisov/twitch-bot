@@ -5,7 +5,7 @@ const fs = remote.require('fs')
 
 const directory = app.getPath('home')
 const cacheDirectory = `${directory}/twitch-bot-cache`
-const cacheFile = `${cacheDirectory}/data.json`
+const cacheDataFile = `${cacheDirectory}/data.json`
 const cacheAvatarsFile = `${cacheDirectory}/avatars.json`
 
 let caches = {}
@@ -17,7 +17,7 @@ if (fs.existsSync(cacheDirectory) === false) {
 export const fsCache = {
   key(name, value) {
     caches[name] = value
-    fs.writeFileSync(cacheFile, JSON.stringify(caches, null, 2))
+    fs.writeFileSync(cacheDataFile, JSON.stringify(caches, null, 2))
   },
   avatars(data) {
     fs.writeFileSync(cacheAvatarsFile, JSON.stringify(data, null, 2))

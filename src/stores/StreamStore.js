@@ -22,12 +22,17 @@ export default new class StreamStore {
   }
 
   getFirst = () => {
-    fetch(`https://api.twitch.tv/kraken/channels/kociqq`, {
-      method: 'GET',
-      headers: {
-        'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
-      },
-    }).then((res) =>
+    fetch(
+      `https://api.twitch.tv/kraken/channels/${
+        process.env.REACT_APP_TWITCH_USER_NAME
+      }`,
+      {
+        method: 'GET',
+        headers: {
+          'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
+        },
+      }
+    ).then((res) =>
       res.json().then((res) => {
         console.log('Got stream info!')
         this.change(res.status, res.game)
@@ -38,9 +43,9 @@ export default new class StreamStore {
   submit = () => {
     client.api(
       {
-        url: `https://api.twitch.tv/kraken/channels/kociqq?status=${
-          this.title
-        }&game=${this.game}`,
+        url: `https://api.twitch.tv/kraken/channels/${
+          process.env.REACT_APP_TWITCH_USER_NAME
+        }?status=${this.title}&game=${this.game}`,
         method: 'PUT',
       },
       (err, res, response) => {

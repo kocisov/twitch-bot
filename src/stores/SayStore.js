@@ -11,6 +11,6 @@ export default new class SayStore {
 
   submit = () => {
     console.log(client.channels)
-    client.say(client.channels[0], this.message)
+    client.say(process.env.REACT_APP_TWITCH_USER_NAME, this.message)
   }
 }()

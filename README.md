@@ -22,7 +22,7 @@ Check this gif https://kocibot-static.surge.sh/showcase.gif
 3.  Replaced Redux with Mobx for this project
 4.  Chat plugin
     * Messages view
-    * Auto scroll
+    * Auto scroll on new messages
     * Fake message
     * UI Message removal
     * User color resolver
@@ -32,22 +32,26 @@ Check this gif https://kocibot-static.surge.sh/showcase.gif
 6.  Avatars plugin
     * Users can use Avatars
     * Chat can use Avatars
-    * Simple Cache 👋
-      * Local file caching to be added
-7.  Usable for everyone, not just kocibot
+7.  Say plugin
+    * You are able to chat with your bot account
+8.  Stream title and game changing
+9.  Usable for everyone, not just kocibot
+10. FileSystem Cache 👋
 
 ## Needs to be done
 
 1.  Subscribers and BTTV + FrankerZ emotes
-2.  Simplify electron-caches.js and make it "not LULable"
+2.  Simplify electron-caches.js and make it "better"
 3.  Scripts for git, npm...
+4.  Restructure, rework weird looking things...
 
 ## How to get it working
 
-Required .env variables, I am using .env.local, wondering why 🤔
+Required .env variables
 
-* `REACT_APP_TWITCH_NAME` name of bot
-* `REACT_APP_TWITCH_PASS` bot's oauth pass => https://twitchapps.com/tmi/
+* `REACT_APP_TWITCH_BOT_NAME` name of bot
+* `REACT_APP_TWITCH_USER_NAME` name of channel
+* `REACT_APP_TWITCH_BOT_PASS` bot's oauth pass => https://twitchapps.com/tmi/
 * `REACT_APP_TWITCH_CLIENT_ID` twitch app client id => https://dev.twitch.tv/dashboard/apps
 
 ## Installation
