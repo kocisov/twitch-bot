@@ -11,6 +11,8 @@ export default new class SayStore {
 
   submit = () => {
     console.log(client.channels)
+    console.log(client.readyState())
+
     client.say(process.env.REACT_APP_TWITCH_USER_NAME, this.message)
   }
 }()

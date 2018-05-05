@@ -6,6 +6,8 @@ const {
 } = require('electron-devtools-installer')
 const path = require('path')
 const url = require('url')
+const fs = require('fs')
+const fetch = require('isomorphic-fetch')
 const isDev = process.env.NODE_ENV === 'development'
 let mainWindow
 

@@ -7,14 +7,20 @@ export default new class StreamStore {
   @observable show = false
 
   @action
-  change = (title, game) => {
+  changeTitle = (title) => {
     this.title = title
+  }
+
+  @action
+  changeGame = (game) => {
     this.game = game
   }
 
   @action
   toggle = () => {
-    if (this.title.length > 0 === false) {
+    const validation = this.title.length > 0
+
+    if (validation === false) {
       this.getFirst()
     }
 
@@ -31,12 +37,13 @@ export default new class StreamStore {
         headers: {
           'Client-ID': process.env.REACT_APP_TWITCH_CLIENT_ID,
         },
-      }
+      },
     ).then((res) =>
       res.json().then((res) => {
         console.log('Got stream info!')
-        this.change(res.status, res.game)
-      })
+        this.changeTitle(res.status)
+        this.changeGame(res.game)
+      }),
     )
   }
 
@@ -54,7 +61,7 @@ export default new class StreamStore {
         }
 
         console.log('Updated stream info!')
-      }
+      },
     )
   }
 }()

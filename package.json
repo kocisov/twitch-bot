@@ -16,8 +16,6 @@
     "styled-components": "^3.2.5",
     "tmi.js": "^1.2.1"
   },
-  "homepage": "./",
-  "main": "src/electron.js",
   "devDependencies": {
     "babel-plugin-styled-components": "^1.5.1",
     "electron": "^1.8.4",
@@ -25,14 +23,15 @@
     "react-app-rewire-mobx": "^1.0.8",
     "react-app-rewired": "^1.5.0"
   },
+  "homepage": "./",
+  "main": "src/electron.js",
   "private": true,
   "scripts": {
     "build": "react-app-rewired build",
     "eject": "react-app-rewired eject",
+    "electron": ".",
+    "electron-dev": "NODE_ENV=development ELECTRON_START_URL=http://localhost:3000 electron .",
     "start": "react-app-rewired start",
-    "test": "react-app-rewired test --env=jsdom",
-    "electron-dev":
-      "NODE_ENV=development ELECTRON_START_URL=http://localhost:3000 electron .",
-    "electron": "."
+    "test": "react-app-rewired test --env=jsdom"
   }
 }

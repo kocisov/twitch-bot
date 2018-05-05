@@ -5,7 +5,7 @@ export default new class PluginsStore {
   @observable chat = true
   @observable charts = false
   @observable users = true
-  @observable say = true
+  @observable say = false
 
   @action
   toggle = (name) => {

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import Images from 'react-icons/lib/io/image'
 import ChatBoxes from 'react-icons/lib/io/chatboxes'
@@ -17,7 +17,7 @@ const plugins = [
     icon: <Images style={{ minWidth: 60 }} width={30} height={30} />,
     description: (
       <Text fontSize={14} color="#c1c1c1">
-        Avatars will cache and use user avatars{' '}
+        <b>Avatars</b> will cache and use user avatars{' '}
         <span role="img" aria-label="Wawing emoji">
           👋
         </span>
@@ -31,8 +31,8 @@ const plugins = [
     icon: <ChatBoxes style={{ minWidth: 60 }} width={30} height={30} />,
     description: (
       <Text fontSize={14} color="#c1c1c1">
-        Chat will keep eye on everything that happens in chat like messages,
-        emotes, mods, etc...
+        <b>Chat</b> will keep eye on everything that happens in chat like
+        messages, emotes, mods, etc...
       </Text>
     ),
   },
@@ -43,18 +43,18 @@ const plugins = [
     icon: <Chart style={{ minWidth: 60 }} width={30} height={30} />,
     description: (
       <Text fontSize={14} color="#c1c1c1">
-        Charts will show data in pretty way
+        <b>Charts</b> will show data in pretty way
       </Text>
     ),
   },
   {
     name: 'Say',
     variable: 'say',
-    disabled: false,
+    disabled: true,
     icon: <Say style={{ minWidth: 60 }} width={30} height={30} />,
     description: (
       <Text fontSize={14} color="#c1c1c1">
-        Say will let you send a message to your channel
+        <b>Say</b> will let you send a message to your channel
       </Text>
     ),
   },
@@ -65,7 +65,7 @@ const plugins = [
     icon: <Users style={{ minWidth: 60 }} width={30} height={30} />,
     description: (
       <Text fontSize={14} color="#c1c1c1">
-        Users will keep eye on users, mods... in chat
+        <b>Users</b> will keep eye on users, mods... in chat
       </Text>
     ),
   },
@@ -73,7 +73,7 @@ const plugins = [
 
 @inject('PluginsStore')
 @observer
-export default class Plugins extends React.Component {
+export default class Plugins extends Component {
   render() {
     return (
       <Page>

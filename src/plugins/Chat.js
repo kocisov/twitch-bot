@@ -6,8 +6,75 @@ import Text from '../components/Text'
 import Button from '../components/Button'
 import Flex from '../components/Flex'
 import Messages, { Child } from '../components/Messages'
-import globalEmotes from '../static/emotes/global.json'
+import BTTVJSON from '../static/emotes/bttv.json'
 import Remove from '../components/Remove'
+
+const twitchEmoteBaseUri = 'https://static-cdn.jtvnw.net/emoticons/v1'
+const getTwitchEmoteUri = (id, size) => `${twitchEmoteBaseUri}/${id}/${size}`
+
+const bttvEmoteBaseUri = 'https://cdn.betterttv.net/emote'
+const getBttvEmoteUri = (id, size = '3x') => `${bttvEmoteBaseUri}/${id}/${size}`
+
+function messageNodes({ emotes, size = '3.0', message, debug = false }) {
+  const normalizedEmotes = []
+  const nodes = []
+
+  if (emotes) {
+    const keys = Object.keys(emotes)
+    keys.forEach((emote) => {
+      const current = emotes[emote][0]
+      const firstIndex = parseInt(current.match(/[0-9]+?(?=-)/)[0], 10)
+      const secondIndex = parseInt(
+        current.match(/-[0-9]+/)[0].replace('-', ''),
+        10,
+      )
+
+      const emoteName = message.slice(firstIndex, secondIndex + 1).trim()
+
+      normalizedEmotes.push({
+        name: emoteName,
+        uri: getTwitchEmoteUri(emote, size),
+        firstIndex,
+        secondIndex,
+        alt: `${emoteName} emote`,
+        default: { id: emote, indexexes: current },
+      })
+    })
+  }
+
+  if (debug) {
+    console.log(normalizedEmotes)
+  }
+
+  const splittedMessage = message.split(/\s+/)
+  splittedMessage.forEach((string) => {
+    const result = normalizedEmotes.find((emote) => emote.name === string)
+    if (result) {
+      nodes.push({
+        type: 'emote',
+        content: result.name,
+        source: result.uri,
+      })
+    } else {
+      const bttvResult = BTTVJSON.find((emote) => emote.code === string)
+
+      if (bttvResult) {
+        nodes.push({
+          type: 'emote',
+          content: bttvResult.code,
+          source: getBttvEmoteUri(bttvResult.id),
+        })
+      } else {
+        nodes.push({
+          type: 'text',
+          content: string,
+        })
+      }
+    }
+  })
+
+  return nodes
+}
 
 const defaultColors = [
   '#FF0000',
@@ -64,13 +131,15 @@ export default class Chat extends React.Component {
   componentDidMount() {
     if (this.props.ChatStore.mounted === false) {
       client.on('chat', (channel, userState, message, self) => {
+        const emotesInMessage = userState.emotes
+        console.log(userState)
         const color = resolveColor(channel, userState.username, userState.color)
 
         this.pushNewMessage({
           channel,
           id: userState.id,
           user: userState['display-name'],
-          content: message,
+          content: messageNodes({ emotes: emotesInMessage, message }),
           color,
         })
       })
@@ -84,7 +153,7 @@ export default class Chat extends React.Component {
           channel,
           id: `${username}-join`,
           user: username,
-          content: 'just joined',
+          content: [{ type: 'text', content: 'just joined' }],
           color: '#2eec71',
         })
       })
@@ -98,7 +167,7 @@ export default class Chat extends React.Component {
           channel,
           id: `${username}-leave`,
           user: username,
-          content: 'just left', // in memory of Nuf
+          content: [{ type: 'text', content: 'just left' }], // in memory of Nuf
           color: '#cc343d',
         })
       })
@@ -116,32 +185,6 @@ export default class Chat extends React.Component {
       ...data,
       avatar,
     })
-  }
-
-  parseMessage(message) {
-    const parsedMessage = []
-    const emotesKeys = Object.keys(globalEmotes)
-    const getEmoteUrl = (id) =>
-      `https://static-cdn.jtvnw.net/emoticons/v1/${id}/1.0`
-
-    message = message.split(/\s+/)
-    message.forEach((text) => {
-      const result = emotesKeys.find((emote) => text === emote)
-      if (result) {
-        parsedMessage.push({
-          type: 'emote',
-          url: getEmoteUrl(globalEmotes[result].id),
-          alt: `${result} emote`,
-        })
-      } else {
-        parsedMessage.push({
-          type: 'text',
-          content: text,
-        })
-      }
-    })
-
-    return parsedMessage
   }
 
   plebcoder(content) {
@@ -172,49 +215,57 @@ export default class Chat extends React.Component {
           >
             Add fake message
           </Button>
+          <Button onClick={this.test}>?</Button>
         </Flex>
         <Messages>
           <Child id="messages-box">
-            {messages.map((message) => (
-              <Flex
-                align="center"
-                key={
-                  message.id || `#{message.user}${message.content.split(0, 2)}`
-                }
-              >
-                {this.props.PluginsStore.avatars && (
-                  <Avatar
-                    width={30}
-                    height={30}
-                    margin={2}
-                    src={message.avatar}
-                    alt=""
+            {messages.length > 0 &&
+              messages.map((message) => (
+                <Flex
+                  align="center"
+                  key={
+                    message.id ||
+                    `#{message.user}${message.content.split(0, 2)}`
+                  }
+                >
+                  {this.props.PluginsStore.avatars && (
+                    <Avatar
+                      width={30}
+                      height={30}
+                      margin={2}
+                      src={message.avatar}
+                      alt=""
+                    />
+                  )}
+                  <Text margin={2} color={message.color} fontWeight={600}>
+                    {message.user}
+                  </Text>
+                  {message.content.map(
+                    (item, index) =>
+                      item.type === 'emote' ? (
+                        <img
+                          style={{ width: 25 }}
+                          key={index}
+                          src={item.source}
+                          alt={item.alt}
+                        />
+                      ) : (
+                        <Text key={index} margin={2}>
+                          {item.content}
+                        </Text>
+                      ),
+                  )}
+                  <Remove
+                    style={{
+                      position: 'absolute',
+                      right: 0,
+                    }}
+                    onClick={() => {
+                      this.props.ChatStore.deleteMessage(message.id)
+                    }}
                   />
-                )}
-                <Text margin={2} color={message.color} fontWeight={600}>
-                  {message.user}
-                </Text>
-                {this.parseMessage(message.content).map(
-                  (item, index) =>
-                    item.type === 'emote' ? (
-                      <img key={index} src={item.url} alt={item.alt} />
-                    ) : (
-                      <Text key={index} margin={2}>
-                        {item.content}
-                      </Text>
-                    )
-                )}
-                <Remove
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                  }}
-                  onClick={() => {
-                    this.props.ChatStore.deleteMessage(message.id)
-                  }}
-                />
-              </Flex>
-            ))}
+                </Flex>
+              ))}
           </Child>
         </Messages>
       </div>

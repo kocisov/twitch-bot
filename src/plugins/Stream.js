@@ -1,15 +1,20 @@
-import * as React from 'react'
+import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { SkyLightStateless } from 'react-skylight'
-import Text from '../components/Text'
 import Input from '../components/Input'
 import Button from '../components/Button'
 
 @inject('StreamStore')
 @observer
-export default class Stream extends React.Component {
+export default class Stream extends Component {
   render() {
-    const { toggle, show, title, game, submit } = this.props.StreamStore
+    const {
+      toggle,
+      show,
+      submit,
+      changeTitle,
+      changeGame,
+    } = this.props.StreamStore
 
     return (
       <SkyLightStateless
@@ -26,13 +31,23 @@ export default class Stream extends React.Component {
           width={300}
           margin={5}
           type="text"
-          value={title}
+          name="title"
+          value={this.props.StreamStore.title}
+          onChange={(event) => {
+            console.log(event.target.name, event.target.value)
+            changeTitle(event.target.value)
+          }}
           placeholder="Stream's title"
         />
         <Input
           margin={5}
           type="text"
-          value={game}
+          name="game"
+          value={this.props.StreamStore.game}
+          onChange={(event) => {
+            console.log(event.target.name, event.target.value)
+            changeGame(event.target.value)
+          }}
           placeholder="Stream's game"
         />
         <Button onClick={submit}>Submit</Button>
